@@ -1,0 +1,20 @@
+<form (submit)="logIn()">
+    <div class="log-in-container">
+        <h1>
+            Log in
+        </h1>
+
+        <input required type="email" placeholder="Email Address" name="email" #emailField>
+        <input required type="password" placeholder="Password" name="password" #passwordField>
+        <div class="checkbox-container">
+            <input required type="checkbox">
+            <span>Remember me</span>
+        </div>
+        <div (click)="logIn()" class="log-in-btn">Log in</div>
+        <span class="color-purple" (click)="toggleToForgotPassword()">Forgot password?</span>
+        <div class="bottom-box">
+            <span>New to Videoflix?</span>
+            <span class="color-purple">Sign Up now</span>
+        </div>
+    </div>
+</form>

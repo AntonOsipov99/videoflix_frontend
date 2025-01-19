@@ -1,0 +1,30 @@
+<img class="background-image" [src]="backgroundImage">
+<div class="content-container">
+    <header>
+        <img class="logo" src="assets/img/Logo.svg" alt="videoflix-logo">
+        <div class="log-in-btn" [ngClass]="{'hidden': this.authService.showLogin}" (click)="toggleToLogIn()">Log in</div>
+    </header>
+    <div class="content" *ngIf="this.authService.showStartPage">
+        <div class="flex-column-box">
+            <h1>
+                Movies, TV shows, and more
+            </h1>
+            <p>
+                Enter your email to create or restart your subscription.
+            </p>
+            <div class="email-field">
+                <form (submit)="toggleToLogIn()" #myForm ngNativeValidate>
+                    <input type="email" placeholder="Email Address" name="email" #emailField> 
+                    <button type="submit" class="sign-up-btn" #sendButton (click)="toggleToSignUp()">Sign up ></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <app-log-in *ngIf="this.authService.showLogin"></app-log-in>
+    <app-forgot-password *ngIf="this.authService.showForgotPassword"></app-forgot-password>
+    <app-sign-up *ngIf="this.authService.showSignUp"></app-sign-up>
+    <footer>
+        <a href="#">Datenschutz</a>
+        <a href="#">Impressum</a>
+    </footer>
+</div>
