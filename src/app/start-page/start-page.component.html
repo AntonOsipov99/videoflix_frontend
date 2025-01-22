@@ -1,7 +1,7 @@
 <img class="background-image" [src]="backgroundImage">
 <div class="content-container">
     <header>
-        <img class="logo" src="assets/img/Logo.svg" alt="videoflix-logo">
+        <img class="logo" src="assets/img/Logo.svg" alt="videoflix-logo" (click)="toggleToStartPage()">
         <div class="log-in-btn" [ngClass]="{'hidden': this.authService.showLogin}" (click)="toggleToLogIn()">Log in</div>
     </header>
     <div class="content" *ngIf="this.authService.showStartPage">
