@@ -10,7 +10,7 @@
             <input required type="checkbox">
             <span>Remember me</span>
         </div>
-        <div (click)="logIn()" class="log-in-btn">Log in</div>
+        <div [routerLink]="['movie-dashboard']" (click)="logIn()" class="log-in-btn">Log in</div>
         <span class="color-purple" (click)="toggleToForgotPassword()">Forgot password?</span>
         <div class="bottom-box">
             <span>New to Videoflix?</span>
