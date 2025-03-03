@@ -21,9 +21,4 @@ export class LogInComponent {
   logIn() {
 
   }
-
-  toggleToForgotPassword() {
-    this.authService.showLogin = false;  
-    this.authService.showForgotPassword = true;
-  }
 }

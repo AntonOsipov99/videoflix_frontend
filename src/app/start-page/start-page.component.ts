@@ -21,30 +21,5 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 export class StartPageComponent {
 
   authService: AuthService = inject(AuthService); 
-  backgroundImage: string = this.authService.startImage
-  
-  toggleToStartPage() {
-    this.backgroundImage = this.authService.startImage;
-    this.authService.showStartPage = true;
-    this.authService.showLogin = false;
-    this.authService.showForgotPassword = false;
-    this.authService.showSignUp = false;
-  }
-
-  toggleToLogIn() {
-    this.backgroundImage = this.authService.cinemaImage;
-    this.authService.showStartPage = false;
-    this.authService.showLogin = true;
-    this.authService.showForgotPassword = false;
-    this.authService.showSignUp = false;
-  }
-
-  toggleToSignUp() {
-    this.backgroundImage = this.authService.cinemaImage;
-    this.authService.showStartPage = false;
-    this.authService.showLogin = false;
-    this.authService.showForgotPassword = false;
-    this.authService.showSignUp = true;
-  }
 
 }

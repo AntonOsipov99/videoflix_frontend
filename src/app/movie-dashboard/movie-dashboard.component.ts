@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-movie-dashboard',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './movie-dashboard.component.html',
   styleUrl: './movie-dashboard.component.scss'
 })
@@ -22,5 +24,7 @@ movies: string[] = [
   'assets/img/whales.svg',
   'assets/img/whales.svg',
 ]
+
+authService: AuthService = inject(AuthService);
 
 }
