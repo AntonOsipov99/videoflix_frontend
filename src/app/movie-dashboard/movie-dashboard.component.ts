@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-movie-dashboard',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule,],
   templateUrl: './movie-dashboard.component.html',
   styleUrl: './movie-dashboard.component.scss'
 })

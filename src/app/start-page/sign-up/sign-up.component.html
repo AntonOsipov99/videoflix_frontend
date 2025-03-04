@@ -1,11 +1,12 @@
-<form (submit)="signUp()">
+<form (submit)="signUp()" ngNativeValidate>
     <div class="sign-up-container">
         <h1>
             Sign up
         </h1>
-        <input required type="email" placeholder="Email Address" name="email" #emailField>
-        <input required type="password" placeholder="Enter a Password" name="password" #passwordField>
-        <input required type="password" placeholder="Confirm Password" name="password" #passwordField>
-        <button class="sign-up-btn">Get Started</button>
+        <input required type="email" placeholder="Email Address" name="email" [(ngModel)]="email">
+        <input required type="password" placeholder="Enter a Password" name="password" [(ngModel)]="password">
+        <input required type="repeated-password" placeholder="Confirm Password" name="password" [(ngModel)]="repeatedPassword" [ngClass]="{'error-margin-input': this.wrongInput}">
+        <span *ngIf="wrongInput" class="error-message">{{ this.errorMessage }}</span>
+        <button type="submit" class="sign-up-btn" [ngClass]="{'error-margin-button': this.wrongInput}">Get Started</button>
     </div>
 </form>

@@ -13,9 +13,9 @@
                 Enter your email to create or restart your subscription.
             </p>
             <div class="email-field">
-                <form (submit)="this.authService.toggleToLogIn()" #myForm ngNativeValidate>
-                    <input type="email" placeholder="Email Address" name="email" #emailField> 
-                    <button type="submit" class="sign-up-btn" #sendButton (click)="this.authService.toggleToSignUp()">Sign up ></button>
+                <form (submit)="this.authService.toggleToSignUp()" #myForm ngNativeValidate>
+                    <input type="email" placeholder="Email Address" name="email" [(ngModel)]="this.authService.emailSignUp"> 
+                    <button type="submit" class="sign-up-btn" #sendButton>Sign up ></button>
                 </form>
             </div>
         </div>

@@ -1,4 +1,6 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,9 @@ export class AuthService {
   showSignUp: boolean = false;
   startImage: string = 'assets/img/videoflix-background.jpg';
   cinemaImage: string = 'assets/img/cinema.jpg';
+  emailSignUp: string = '';
   currentBackgroundImage: string = this.startImage;
+  private router = inject(Router);
   
   setPageState(page: 'start' | 'login' | 'signup' | 'forgot') {
     this.showStartPage = page === 'start';
@@ -38,6 +42,12 @@ export class AuthService {
   
   toggleToForgotPassword() {
     this.setPageState('forgot');
+  }
+
+  logOut() {
+    localStorage.removeItem('token');
+    this.router.navigate(['']);
+    this.toggleToStartPage();
   }
 
   constructor() { 
