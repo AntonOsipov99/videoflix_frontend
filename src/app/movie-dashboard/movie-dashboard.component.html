@@ -1,3 +1,6 @@
+<video #backgroundVideo autoplay muted loop class="background-video">
+    <source [src]="this.currentBackgroundVideo" type="video/mp4">
+</video>
 <div class="content">
     <header>
         <img src="assets/img/Symbol.svg" alt="Logo">
@@ -5,12 +8,10 @@
     </header>
     <div class="movie-description-box">
         <h1 class="movie-headline">
-            Breakout
+            {{ featuredMovieName }}
         </h1>
         <p class="movie-description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas nam obcaecati cumque in quae id earum
-            sapiente tempora, quas
-            labore velit commodi libero eaque autem, architecto magni praesentium. Error, itaque.
+            {{ featuredMovieDescription }}
         </p>
         <div class="log-out-btn width-btn"><img src="assets/img/play_arrow.svg" alt="arrow-image">Play</div>
     </div>
@@ -19,7 +20,7 @@
             New on Videoflix
         </p>
         <div class="movies-container">
-            <img *ngFor="let movie of movies" [src]="movie" alt="movie-image" class="movie">
+            <img *ngFor="let movie of newMovies" [src]="movie.image" alt="movie-image" class="movie">
         </div>
     </div>
     <div class="movie-list">
@@ -27,7 +28,7 @@
             Documentary
         </p>
         <div class="movies-container">
-            <img *ngFor="let movie of movies" [src]="movie" alt="movie-image" class="movie">
+            <img *ngFor="let movie of documentaryMovies" [src]="movie.image" alt="movie-image" class="movie">
         </div>
     </div>
     <div class="movie-list">
@@ -35,7 +36,7 @@
             Drama
         </p>
         <div class="movies-container">
-            <img *ngFor="let movie of movies" [src]="movie" alt="movie-image" class="movie">
+            <img *ngFor="let movie of dramaMovies" [src]="movie.image" alt="movie-image" class="movie">
         </div>
     </div>
     <div class="movie-list">
@@ -43,7 +44,7 @@
             Romance
         </p>
         <div class="movies-container">
-            <img *ngFor="let movie of movies" [src]="movie" alt="movie-image" class="movie">
+            <img *ngFor="let movie of romanceMovies" [src]="movie.image" alt="movie-image" class="movie">
         </div>
     </div>
     <footer>
