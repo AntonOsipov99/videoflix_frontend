@@ -24,7 +24,7 @@
     <app-forgot-password *ngIf="this.authService.showForgotPassword"></app-forgot-password>
     <app-sign-up *ngIf="this.authService.showSignUp"></app-sign-up>
     <footer>
-        <a href="#">Datenschutz</a>
-        <a href="#">Impressum</a>
+        <a [routerLink]="['movie-dashboard']">Datenschutz</a>
+        <a>Impressum</a>
     </footer>
 </div>

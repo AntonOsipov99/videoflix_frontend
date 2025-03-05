@@ -13,14 +13,14 @@
         <p class="movie-description">
             {{ featuredMovieDescription }}
         </p>
-        <div class="log-out-btn width-btn"><img src="assets/img/play_arrow.svg" alt="arrow-image">Play</div>
+        <div class="log-out-btn width-btn" (click)="playFeaturedMovie()"><img src="assets/img/play_arrow.svg" alt="arrow-image">Play</div>
     </div>
     <div class="movie-list">
         <p class="headline">
             New on Videoflix
         </p>
         <div class="movies-container">
-            <img *ngFor="let movie of newMovies" [src]="movie.image" alt="movie-image" class="movie">
+            <img *ngFor="let movie of newMovies" [src]="movie.image" alt="movie-image" class="movie" (click)="playMovie(movie)">
         </div>
     </div>
     <div class="movie-list">
@@ -28,7 +28,7 @@
             Documentary
         </p>
         <div class="movies-container">
-            <img *ngFor="let movie of documentaryMovies" [src]="movie.image" alt="movie-image" class="movie">
+            <img *ngFor="let movie of documentaryMovies" [src]="movie.image" alt="movie-image" class="movie" (click)="playMovie(movie)">
         </div>
     </div>
     <div class="movie-list">
@@ -36,7 +36,7 @@
             Drama
         </p>
         <div class="movies-container">
-            <img *ngFor="let movie of dramaMovies" [src]="movie.image" alt="movie-image" class="movie">
+            <img *ngFor="let movie of dramaMovies" [src]="movie.image" alt="movie-image" class="movie" (click)="playMovie(movie)">
         </div>
     </div>
     <div class="movie-list">
@@ -44,7 +44,7 @@
             Romance
         </p>
         <div class="movies-container">
-            <img *ngFor="let movie of romanceMovies" [src]="movie.image" alt="movie-image" class="movie">
+            <img *ngFor="let movie of romanceMovies" [src]="movie.image" alt="movie-image" class="movie" (click)="playMovie(movie)">
         </div>
     </div>
     <footer>

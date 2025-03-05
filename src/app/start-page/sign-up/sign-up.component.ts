@@ -36,7 +36,7 @@ export class SignUpComponent {
     this.errorMessage = '';
     this.wrongInput = false;
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/auth/registration/", {
+      const response = await fetch("https://backend.anton-videoflix-server.de/api/auth/registration/", {
         method: "POST",
         headers: {
           'Accept': 'application/json',

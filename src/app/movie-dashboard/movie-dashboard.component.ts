@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Movie, MovieService } from '../services/movie.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-dashboard',
@@ -13,7 +14,8 @@ export class MovieDashboardComponent {
   @ViewChild('backgroundVideo') videoElement!: ElementRef<HTMLVideoElement>;
 
   authService: AuthService = inject(AuthService);
-
+  movieService: MovieService = inject(MovieService);
+  router: Router = inject(Router);
   movies: Movie[] = [];
   documentaryMovies: Movie[] = [];
   dramaMovies: Movie[] = [];
@@ -26,7 +28,7 @@ export class MovieDashboardComponent {
   featuredMovieDescription: string = '';
   currentBackgroundVideo: string = '';
 
-  constructor(private movieService: MovieService) {}
+  constructor() {}
 
   ngOnInit() {
     this.loadMovies();
@@ -81,6 +83,18 @@ export class MovieDashboardComponent {
       this.featuredMovieDescription = this.featuredMovie.description;
       this.currentBackgroundVideo = this.featuredMovie.video_file;
     }
+  }
+
+  playFeaturedMovie() {
+    if (this.featuredMovie) {
+      this.movieService.movieSrc = this.featuredMovie.video_file
+      this.router.navigate(['/videoplayer']);
+    }
+  }
+
+  playMovie(movie: Movie) {
+    this.movieService.movieSrc = movie.video_file
+    this.router.navigate(['/videoplayer']);
   }
 
 }

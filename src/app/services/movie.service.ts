@@ -19,7 +19,8 @@ export interface Movie {
 })
 export class MovieService {
 
-  private apiUrl = 'http://127.0.0.1:8000/api/movies/';
+  private apiUrl = 'https://backend.anton-videoflix-server.de/api/movies/';
+  private _movieSrc: string = '';
 
   constructor(private http: HttpClient) { }
 
@@ -41,4 +42,18 @@ export class MovieService {
     )
   }
 
+  get movieSrc(): string {
+    if (this._movieSrc === '') {
+      const storedSrc = localStorage.getItem('movieSrc');
+      if (storedSrc) {
+        this._movieSrc = storedSrc;
+      }
+    } 
+    return this._movieSrc;
+  }
+
+  set movieSrc(value: string) {
+    this._movieSrc = value;
+    localStorage.setItem('movieSrc', value);
+  }
 }
