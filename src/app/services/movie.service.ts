@@ -12,6 +12,9 @@ export interface Movie {
   video_file: string;
   genre: string;
   image: string;
+  is_processed: boolean;
+  available_resolutions: string[];
+  hls_manifest: string;
 }
 
 @Injectable({
@@ -21,6 +24,7 @@ export class MovieService {
 
   private apiUrl = 'https://backend.anton-videoflix-server.de/api/movies/';
   private _movieSrc: string = '';
+  currentMovie: Movie | null = null;
 
   constructor(private http: HttpClient) { }
 
@@ -56,4 +60,16 @@ export class MovieService {
     this._movieSrc = value;
     localStorage.setItem('movieSrc', value);
   }
+
+setCurrentMovie(movie: Movie) {
+  this.currentMovie = movie;
+  if (movie.is_processed && movie.hls_manifest) {
+    const baseUrl = 'https://backend.anton-videoflix-server.de/media/';
+    const hlsUrl = `${baseUrl}${movie.hls_manifest}`;
+    this.movieSrc = hlsUrl;
+  } else {
+    this.movieSrc = movie.video_file;
+  }
+}
+  
 }

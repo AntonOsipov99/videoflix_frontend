@@ -46,6 +46,8 @@ export class AuthService {
 
   logOut() {
     localStorage.removeItem('token');
+    localStorage.removeItem('preferredQuality');
+    localStorage.removeItem('movieSrc');
     this.router.navigate(['']);
     this.toggleToStartPage();
   }

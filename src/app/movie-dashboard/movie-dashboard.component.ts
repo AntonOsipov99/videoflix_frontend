@@ -28,7 +28,7 @@ export class MovieDashboardComponent {
   featuredMovieDescription: string = '';
   currentBackgroundVideo: string = '';
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.loadMovies();
@@ -37,18 +37,12 @@ export class MovieDashboardComponent {
   loadMovies() {
     this.loading = true;
     this.error = null;
-
     this.movieService.getMovies().subscribe({
       next: (data) => {
         this.movies = data;
         this.filterMoviesByGenres();
         this.selectedFeaturedMovie();
-        if (this.videoElement && this.videoElement.nativeElement) {
-          const video = this.videoElement.nativeElement;
-          video.src = this.currentBackgroundVideo;
-          video.muted = true;
-          video.play().catch(err => console.error('Video autoplay failed', err));
-        }
+        this.playBackgroundVideo();
         this.loading = false;
       },
       error: (err) => {
@@ -58,19 +52,25 @@ export class MovieDashboardComponent {
     })
   }
 
+  playBackgroundVideo() {
+    if (this.videoElement && this.videoElement.nativeElement) {
+      const video = this.videoElement.nativeElement;
+      video.src = this.currentBackgroundVideo;
+      video.muted = true;
+      video.play().catch(err => console.error('Video autoplay failed', err));
+    }
+  }
+
   filterMoviesByGenres() {
     this.documentaryMovies = this.movies.filter(
       movie => movie.genre === 'Documentary'
     );
-
     this.dramaMovies = this.movies.filter(
       movie => movie.genre === 'Drama'
     );
-
     this.romanceMovies = this.movies.filter(
       movie => movie.genre === 'Romance'
     );
-
     this.newMovies = [...this.movies]
       .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
       .slice(0, 10);
@@ -85,16 +85,16 @@ export class MovieDashboardComponent {
     }
   }
 
-  playFeaturedMovie() {
-    if (this.featuredMovie) {
-      this.movieService.movieSrc = this.featuredMovie.video_file
-      this.router.navigate(['/videoplayer']);
-    }
+  playMovie(movie: Movie) {
+    this.movieService.setCurrentMovie(movie);
+    this.router.navigate(['/videoplayer']);
   }
 
-  playMovie(movie: Movie) {
-    this.movieService.movieSrc = movie.video_file
-    this.router.navigate(['/videoplayer']);
+  playFeaturedMovie() {
+    if (this.featuredMovie) {
+      this.movieService.setCurrentMovie(this.featuredMovie);
+      this.router.navigate(['/videoplayer']);
+    }
   }
 
 }

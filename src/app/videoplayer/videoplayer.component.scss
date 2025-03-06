@@ -1,0 +1,46 @@
+.quality-selector {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0 5px;
+}
+
+.quality-button {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  padding: 3px 8px;
+  font-size: 12px;
+  height: 28px;
+  cursor: pointer;
+}
+
+.quality-menu {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+  padding: 5px;
+  margin-bottom: 5px;
+  min-width: 80px;
+  z-index: 10;
+}
+
+.quality-menu button {
+  display: block;
+  background: transparent;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.quality-menu button:hover, 
+.quality-menu button.active {   
+  background: rgba(255, 255, 255, 0.2);
+}
