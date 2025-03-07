@@ -1,4 +1,5 @@
 <vg-player (onPlayerReady)="onPlayerReady($event)">
+    <img [routerLink]="['/movie-dashboard']" src="/assets/img/back-arrow.png" alt="back-arrow" class="back-arrow">
     <vg-overlay-play></vg-overlay-play>
     <vg-buffering></vg-buffering>
     <vg-scrub-bar [vgSlider]="true">
@@ -7,13 +8,15 @@
     </vg-scrub-bar>
     <vg-controls>
       <vg-play-pause></vg-play-pause>
+      <img src="/assets/img/backward.png" class="control-button margin-right" (click)="seekTime(-10)">
+      <img src="/assets/img/forward.png" class="control-button" (click)="seekTime(+10)">
       <vg-playback-button></vg-playback-button>
       <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
       <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
       <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
       <div class="quality-selector">
         <button (click)="toggleQualityMenu()" class="quality-button">
-          {{ currentQuality }}
+          {{ formatQualityForDisplay(currentQuality) }}
         </button>
         <div class="quality-menu" *ngIf="qualityMenuVisible">
           <button *ngFor="let quality of availableQualities" 

@@ -4,7 +4,7 @@ import { VgControlsModule } from '@videogular/ngx-videogular/controls';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { MovieService } from '../services/movie.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
@@ -18,7 +18,8 @@ import Hls from 'hls.js';
     VgOverlayPlayModule,
     VgBufferingModule,
     CommonModule,
-    ToastrModule
+    ToastrModule,
+    RouterLink
   ],
   templateUrl: './videoplayer.component.html',
   styleUrl: './videoplayer.component.scss'
@@ -97,6 +98,10 @@ export class VideoplayerComponent implements OnInit {
     return this._currentQuality;
   }
 
+  formatQualityForDisplay(quality: string): string {
+    return quality === 'auto' ? 'Auto' : quality;
+  }
+
   toggleQualityMenu() {
     this.qualityMenuVisible = !this.qualityMenuVisible;
   }
@@ -113,6 +118,24 @@ export class VideoplayerComponent implements OnInit {
       this._currentQuality = '120p';
     }
     localStorage.setItem('preferredQuality', this._currentQuality);
+  }
+
+  seekTime(seconds: number): void {
+    if (!this.api) return;
+    const media = this.api.getDefaultMedia();
+    if (!media) return;
+    const currentTime = this.api.currentTime;
+    const duration = this.api.duration;
+    let newTime = currentTime + seconds;
+    if (newTime < 0) {
+      newTime = 0;
+    } else if (newTime > duration) {
+      newTime = duration;
+    }
+    this.api.currentTime = newTime;
+    const direction = seconds > 0 ? 'forward' : 'backward';
+    const absoluteSeconds = Math.abs(seconds);
+    this.toastr.info(`Skipped ${direction} ${absoluteSeconds} seconds`);
   }
 
   private isPlaying(): boolean {
@@ -137,28 +160,33 @@ export class VideoplayerComponent implements OnInit {
       this.changeDirectMp4Quality(quality, currentTime, wasPlaying);
     }
     if (showToast) {
-      this.toastr.info(`Video quality changed to ${quality}`);
+      this.toastr.info(`Video quality changed to ${this.formatQualityForDisplay(quality)}`);
     }
     this.qualityMenuVisible = false;
   }
 
   applyHlsQuality(quality: string, resumePlayback: boolean = false, currentTime: number = 0) {
-    if (!this.hls) return;
+    if (!this.hls) return; 
+    const savedTime = currentTime;
+    const shouldResume = resumePlayback;
     if (quality === 'auto') {
-      this.hls.currentLevel = -1;
-      this.resumeVideoIfNeeded(resumePlayback, currentTime);
+      this.setHlsLevelAndLoad(-1, currentTime, shouldResume, savedTime);
     } else {
       const height = parseInt(quality.replace('p', ''));
-      const levelIndex = this.hls.levels.findIndex((level: any) =>
-        level.height === height);
+      const levelIndex = this.hls.levels.findIndex((level: any) => 
+        level.height === height);  
       if (levelIndex !== -1) {
-        this.hls.currentLevel = levelIndex;
-        this.hls.startLoad(Math.floor(currentTime));
-        this.hls.once(Hls.Events.FRAG_LOADED, () => {
-          this.resumeVideoIfNeeded(resumePlayback, currentTime);
-        });
+        this.setHlsLevelAndLoad(levelIndex, currentTime, shouldResume, savedTime);
       }
     }
+  }
+
+  private setHlsLevelAndLoad(level: number, currentTime: number, shouldResume: boolean, savedTime: number): void {
+    this.hls!.currentLevel = level;
+    this.hls!.startLoad(Math.floor(currentTime));
+    this.hls!.once(Hls.Events.FRAG_LOADED, () => {
+      this.resumeVideoIfNeeded(shouldResume, savedTime);
+    });
   }
 
   private resumeVideoIfNeeded(resumePlayback: boolean, currentTime: number): void {
@@ -176,7 +204,6 @@ export class VideoplayerComponent implements OnInit {
     if (quality !== 'auto') {
       newSource = this.getQualitySpecificUrl(currentSource, quality);
     }
-
     this.updateVideoSource(newSource, currentTime, resumePlayback);
   }
 
@@ -197,7 +224,6 @@ export class VideoplayerComponent implements OnInit {
 
   updateVideoSource(src: string, startTime: number = 0, resumePlayback: boolean = false) {
     this.movieService.movieSrc = src;
-
     setTimeout(() => {
       if (this.api) {
         this.api.getDefaultMedia().subscriptions.canPlay.subscribe(() => {
@@ -218,13 +244,7 @@ export class VideoplayerComponent implements OnInit {
     setTimeout(() => {
       const videoElement = document.getElementById('singleVideo') as HTMLVideoElement;
       if (!videoElement) return;
-      this.hls = new Hls({
-        capLevelToPlayerSize: true,
-        startLevel: -1,
-        maxBufferLength: 30,
-        maxMaxBufferLength: 60,
-        fragLoadingTimeOut: 4000
-      });
+      this.hls = new Hls({capLevelToPlayerSize: true, startLevel: -1, maxBufferLength: 30, maxMaxBufferLength: 60, fragLoadingTimeOut: 4000});
       this.hls.loadSource(this.movieService.movieSrc);
       this.hls.attachMedia(videoElement);
       this.setupHlsQualityListeners();

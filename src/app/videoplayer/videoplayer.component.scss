@@ -1,8 +1,12 @@
 .quality-selector {
   position: relative;
-  display: flex;
+  display: inline-block;
   align-items: center;
   margin: 0 5px;
+}
+
+vg-controls {
+  align-items: center;
 }
 
 .quality-button {
@@ -10,9 +14,8 @@
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 3px;
-  padding: 3px 8px;
-  font-size: 12px;
-  height: 28px;
+  padding: 2px 8px;
+  font-size: 16px;
   cursor: pointer;
 }
 
@@ -43,4 +46,47 @@
 .quality-menu button:hover, 
 .quality-menu button.active {   
   background: rgba(255, 255, 255, 0.2);
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 200;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.control-button {
+  height: 26px;
+  width: 26px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.margin-right {
+  margin-right: 10px;
+}
+
+.back-arrow {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 50px;
+  z-index: 999;
+  top: 50px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
