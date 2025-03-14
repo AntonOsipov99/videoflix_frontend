@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 
@@ -29,21 +29,30 @@ export class MovieService {
   constructor(private http: HttpClient) { }
 
   getMovies(): Observable<Movie[]> {
-    return this.http.get<Movie[]>(this.apiUrl).pipe(
+    const headers = this.getAuthHeaders();
+    return this.http.get<Movie[]>(this.apiUrl, { headers }).pipe(
       catchError(error => {
         console.error('Error fetching movies:', error);
         return throwError(() => new Error('Failed to fetch movies. Please try again later'));
       })
     );
   }
-
+  
   getMovie(id: number): Observable<Movie> {
-    return this.http.get<Movie>(`${this.apiUrl}${id}/`).pipe(
+    const headers = this.getAuthHeaders();
+    return this.http.get<Movie>(`${this.apiUrl}${id}/`, { headers }).pipe(
       catchError(error => {
-        console.error(`Error fetching movie ${id}:`,error);
+        console.error(`Error fetching movie ${id}:`, error);
         return throwError(() => new Error('Failed to fetch movie details. Please try again later'));
       })
-    )
+    );
+  }
+  
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      'Authorization': `Token ${token}`
+    });
   }
 
   get movieSrc(): string {

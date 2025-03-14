@@ -3,12 +3,10 @@
         <h1>
             Log in
         </h1>
-        <input required type="email" placeholder="Email Address" name="email" [(ngModel)]="email" [ngClass]="{'wrong-input': wrongInput}">
-        <span class="error-message" *ngIf="errorMessage">
-            {{ errorMessage }}
-        </span>
+        <input required type="email" placeholder="Email Address" name="email" [(ngModel)]="email">
         <input required type="password" placeholder="Password" name="password" [(ngModel)]="password">
-        <button type="submit" class="log-in-btn" [disabled]="isLoading">{{ isLoading ? 'Logging in...' : 'Log in' }}</button>
+        <button type="submit" class="log-in-btn" [ngClass]="{'disabled-btn': !email || !password}"
+            [disabled]="!email || !password">Log in</button>
         <span class="color-purple" (click)="this.authService.toggleToForgotPassword()">Forgot password?</span>
         <div class="bottom-box">
             <span>New to Videoflix?</span>

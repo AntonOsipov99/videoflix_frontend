@@ -47,8 +47,10 @@
             <img *ngFor="let movie of romanceMovies" [src]="movie.image" alt="movie-image" class="movie" (click)="playMovie(movie)">
         </div>
     </div>
+    <app-impressum *ngIf="this.authService.showImpressum"></app-impressum>
+    <app-datenschutz *ngIf="this.authService.showDatenschutz"></app-datenschutz>
     <footer>
-        <a href="#">Datenschutz</a>
-        <a href="#">Impressum</a>
+        <a (click)="this.authService.toggleToDatenschutz()">Datenschutz</a>
+        <a (click)="this.authService.toggleToImpressum()">Impressum</a>
     </footer>
 </div>

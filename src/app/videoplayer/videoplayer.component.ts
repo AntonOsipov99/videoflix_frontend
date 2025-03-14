@@ -90,15 +90,15 @@ export class VideoplayerComponent implements OnInit {
     });
   }
 
-  isHlsUrl(url: string): boolean {
+  isHlsUrl(url: string) {
     return url.includes('.m3u8');
   }
 
-  get currentQuality(): string {
+  get currentQuality() {
     return this._currentQuality;
   }
 
-  formatQualityForDisplay(quality: string): string {
+  formatQualityForDisplay(quality: string) {
     return quality === 'auto' ? 'Auto' : quality;
   }
 
@@ -120,7 +120,7 @@ export class VideoplayerComponent implements OnInit {
     localStorage.setItem('preferredQuality', this._currentQuality);
   }
 
-  seekTime(seconds: number): void {
+  seekTime(seconds: number) {
     if (!this.api) return;
     const media = this.api.getDefaultMedia();
     if (!media) return;
@@ -129,26 +129,22 @@ export class VideoplayerComponent implements OnInit {
     let newTime = currentTime + seconds;
     if (newTime < 0) {
       newTime = 0;
-    } else if (newTime > duration) {
+    } else if (newTime > duration)
       newTime = duration;
-    }
     this.api.currentTime = newTime;
     const direction = seconds > 0 ? 'forward' : 'backward';
     const absoluteSeconds = Math.abs(seconds);
     this.toastr.info(`Skipped ${direction} ${absoluteSeconds} seconds`);
   }
 
-  private isPlaying(): boolean {
+  private isPlaying() {
     if (!this.api) return false;
     const media = this.api.getDefaultMedia();
     return media ? media.state === 'playing' : false;
   }
 
   changeQuality(quality: string, showToast: boolean = true) {
-    if (quality === this._currentQuality) {
-      this.qualityMenuVisible = false;
-      return;
-    }
+    if (quality === this._currentQuality) { this.qualityMenuVisible = false; return; }
     const wasPlaying = this.isPlaying();
     const currentTime = this.api?.currentTime || 0;
     this.api?.pause();
@@ -156,12 +152,10 @@ export class VideoplayerComponent implements OnInit {
     localStorage.setItem('preferredQuality', quality);
     if (this.isHlsUrl(this.movieService.movieSrc)) {
       this.applyHlsQuality(quality, wasPlaying, currentTime);
-    } else {
+    } else
       this.changeDirectMp4Quality(quality, currentTime, wasPlaying);
-    }
-    if (showToast) {
+    if (showToast)
       this.toastr.info(`Video quality changed to ${this.formatQualityForDisplay(quality)}`);
-    }
     this.qualityMenuVisible = false;
   }
 
@@ -181,7 +175,7 @@ export class VideoplayerComponent implements OnInit {
     }
   }
 
-  private setHlsLevelAndLoad(level: number, currentTime: number, shouldResume: boolean, savedTime: number): void {
+  private setHlsLevelAndLoad(level: number, currentTime: number, shouldResume: boolean, savedTime: number) {
     this.hls!.currentLevel = level;
     this.hls!.startLoad(Math.floor(currentTime));
     this.hls!.once(Hls.Events.FRAG_LOADED, () => {
@@ -189,7 +183,7 @@ export class VideoplayerComponent implements OnInit {
     });
   }
 
-  private resumeVideoIfNeeded(resumePlayback: boolean, currentTime: number): void {
+  private resumeVideoIfNeeded(resumePlayback: boolean, currentTime: number) {
     if (this.api) {
       this.api.currentTime = currentTime;
       if (resumePlayback) {
@@ -207,7 +201,7 @@ export class VideoplayerComponent implements OnInit {
     this.updateVideoSource(newSource, currentTime, resumePlayback);
   }
 
-  getQualitySpecificUrl(masterUrl: string, quality: string): string {
+  getQualitySpecificUrl(masterUrl: string, quality: string) {
     if (masterUrl.includes('master.m3u8')) {
       return masterUrl.replace('master.m3u8', `${quality}/playlist.m3u8`);
     }

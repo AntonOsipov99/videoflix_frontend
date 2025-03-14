@@ -6,6 +6,8 @@ import { AuthService } from '../services/auth.service';
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { RouterModule } from '@angular/router';
+import { ImpressumComponent } from "../impressum/impressum.component";
+import { DatenschutzComponent } from "../datenschutz/datenschutz.component";
 
 @Component({
   selector: 'app-start-page',
@@ -15,7 +17,9 @@ import { RouterModule } from '@angular/router';
     LogInComponent,
     ForgotPasswordComponent,
     SignUpComponent,
-    RouterModule
+    ImpressumComponent,
+    DatenschutzComponent,
+    RouterModule,
 ],
   templateUrl: './start-page.component.html',
   styleUrl: './start-page.component.scss'
@@ -23,5 +27,9 @@ import { RouterModule } from '@angular/router';
 export class StartPageComponent {
 
   authService: AuthService = inject(AuthService); 
+
+  ngOnInit() {
+    this.authService.showCancelButton = false;
+  }
 
 }

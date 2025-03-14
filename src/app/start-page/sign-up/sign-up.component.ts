@@ -1,64 +1,80 @@
 import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sign-up',
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss'
 })
 export class SignUpComponent {
 
-  authService: AuthService = inject(AuthService);
-  email: string = this.authService.emailSignUp;
-  password: string = '';
-  repeatedPassword: string = '';
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private toastr = inject(ToastrService);
+  
+  email = new FormControl('', [Validators.required, Validators.email]);
+  password = new FormControl('', [Validators.required]);
+  repeatedPassword = new FormControl('', [Validators.required]);
   errorMessage: string = '';
-  wrongInput: boolean = false;
 
   ngOnInit() {
-    this.authService.emailSignUp = '';
+    if (this.authService.emailSignUp) 
+      this.email.setValue(this.authService.emailSignUp);
   }
 
-  async signUp() {
-    if (!this.email || !this.password || !this.repeatedPassword) {
-      this.wrongInput = true;
-      this.errorMessage = 'The fields must all be filled out.';
-      return;
+    passwordsMatch() {
+    return this.password.value === this.repeatedPassword.value;
+  }
+
+  validateForm() {
+    if (!this.email.valid || !this.password.valid || 
+        !this.repeatedPassword.valid) {
+      return false;
     }
-    if (this.password !== this.repeatedPassword) {
-      this.wrongInput = true;
-      this.errorMessage = "The passwords don't match";
-      return;
+    
+    if (!this.passwordsMatch()) {
+      this.showError('Passwords must match.');
+      return false;
     }
-    this.errorMessage = '';
-    this.wrongInput = false;
-    try {
-      const response = await fetch("https://backend.anton-videoflix-server.de/api/auth/registration/", {
-        method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: this.email,
-          password: this.password,
-          repeated_password: this.repeatedPassword
-        })
-      });
-      const data = await response.json();
-      if (!response.ok || data.email || data.username) {
-        this.errorMessage = data.email || data.password || data.non_field_errors || 'Registration failed';
-        this.wrongInput = true;
+    
+    return true;
+  }
+  
+  async signUp(event: Event) {
+    event.preventDefault();
+    if (!this.validateForm()) return;
+    const result = await this.authService.register(
+      this.email.value || '',
+      this.password.value || '',
+      this.repeatedPassword.value || ''
+    );
+    if (result.success) {
+      setTimeout(() => this.authService.toggleToLogIn(), 2000);
+    } else {
+      this.handleRegistrationErrors(result.errors || {});
+    }
+  }
+
+  private handleRegistrationErrors(errors: Record<string, string[]>) {
+    const fieldPriority = ['email', 'password', 'repeated_password', 'non_field_errors'];
+    for (const field of fieldPriority) {
+      if (errors[field]?.length) {
+        this.showError(errors[field][0]);
         return;
       }
-      this.authService.toggleToLogIn();
-    } catch (error) {
-      console.log('Registration error:', error);
-      this.errorMessage = 'Connection error. Please try again.';
-      this.wrongInput = true;
     }
+    this.showError('An error occurred during registration. Please try again.');
+  }
+  
+  private showError(message: string) {
+    this.errorMessage = message;
+    this.toastr.error(message, 'Registration failed');
   }
 }

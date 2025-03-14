@@ -2,7 +2,8 @@
 <div class="content-container">
     <header>
         <img class="logo" src="assets/img/Logo.svg" alt="videoflix-logo" (click)="this.authService.toggleToStartPage()">
-        <div class="log-in-btn" [ngClass]="{'hidden': this.authService.showLogin}" (click)="this.authService.toggleToLogIn()">Log in</div>
+        <div class="log-in-btn" [ngClass]="{'hidden': this.authService.showLogin}"
+            (click)="this.authService.toggleToLogIn()">Log in</div>
     </header>
     <div class="content" *ngIf="this.authService.showStartPage">
         <div class="flex-column-box">
@@ -14,7 +15,8 @@
             </p>
             <div class="email-field">
                 <form (submit)="this.authService.toggleToSignUp()" #myForm ngNativeValidate>
-                    <input type="email" placeholder="Email Address" name="email" [(ngModel)]="this.authService.emailSignUp"> 
+                    <input type="email" placeholder="Email Address" name="email"
+                        [(ngModel)]="this.authService.emailSignUp">
                     <button type="submit" class="sign-up-btn" #sendButton>Sign up ></button>
                 </form>
             </div>
@@ -23,8 +25,10 @@
     <app-log-in *ngIf="this.authService.showLogin"></app-log-in>
     <app-forgot-password *ngIf="this.authService.showForgotPassword"></app-forgot-password>
     <app-sign-up *ngIf="this.authService.showSignUp"></app-sign-up>
+    <app-impressum *ngIf="this.authService.showImpressum"></app-impressum>
+    <app-datenschutz *ngIf="this.authService.showDatenschutz"></app-datenschutz>
     <footer>
-        <a [routerLink]="['movie-dashboard']">Datenschutz</a>
-        <a>Impressum</a>
+        <a (click)="this.authService.toggleToDatenschutz()">Datenschutz</a>
+        <a (click)="this.authService.toggleToImpressum()">Impressum</a>
     </footer>
 </div>

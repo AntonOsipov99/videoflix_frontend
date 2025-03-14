@@ -120,6 +120,19 @@ footer {
 
         &:hover {
             text-decoration: underline;
+            cursor: pointer;
         }
     }
+}
+
+app-datenschutz {
+    position: absolute;
+    top: 15%;
+    left: 15%;
+}
+
+app-impressum {
+    position: absolute;
+    top: 30%;
+    left: 36%;
 }

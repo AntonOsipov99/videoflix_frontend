@@ -1,0 +1,19 @@
+<main class="content-container">
+    <section class="d_flex_cc_gl f_d_c">
+        <h1 class="font_prime_color">Impressum</h1>
+        <img *ngIf="this.authService.showCancelButton"  src="assets/img/cancel.png" class="cancel-btn" (click)="this.authService.closeImpressum()">
+
+        <h2>Angaben gemäß § 5 TMG</h2>
+        <p>
+            Anton Osipov<br>
+            Feuerwehrstraße 37<br>
+            77933 Lahr
+        </p>
+
+        <h2>Kontakt</h2>
+        <p>
+            Telefon: +4915225466370<br>
+            E-Mail: <a class="link" href="mailto:kontakt@anton-osipov.de">kontakt&#64;anton-osipov.de</a>
+        </p>
+    </section>
+</main>

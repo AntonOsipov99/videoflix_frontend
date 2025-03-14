@@ -3,10 +3,16 @@ import { Component, inject, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Movie, MovieService } from '../services/movie.service';
 import { Router } from '@angular/router';
+import { ImpressumComponent } from "../impressum/impressum.component";
+import { DatenschutzComponent } from "../datenschutz/datenschutz.component";
 
 @Component({
   selector: 'app-movie-dashboard',
-  imports: [CommonModule],
+  imports: [
+    ImpressumComponent,
+    DatenschutzComponent,
+    CommonModule
+  ],
   templateUrl: './movie-dashboard.component.html',
   styleUrl: './movie-dashboard.component.scss'
 })
@@ -32,6 +38,7 @@ export class MovieDashboardComponent {
 
   ngOnInit() {
     this.loadMovies();
+    this.authService.showCancelButton = true;
   }
 
   loadMovies() {
