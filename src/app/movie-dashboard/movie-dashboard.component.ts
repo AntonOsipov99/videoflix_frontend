@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, inject, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Movie, MovieService } from '../services/movie.service';
@@ -34,7 +34,7 @@ export class MovieDashboardComponent {
   featuredMovieDescription: string = '';
   currentBackgroundVideo: string = '';
 
-  constructor() { }
+  constructor(private viewportScroller: ViewportScroller) { }
 
   ngOnInit() {
     this.loadMovies();
@@ -88,7 +88,11 @@ export class MovieDashboardComponent {
       this.featuredMovie = this.newMovies[0];
       this.featuredMovieName = this.featuredMovie.title;
       this.featuredMovieDescription = this.featuredMovie.description;
-      this.currentBackgroundVideo = this.featuredMovie.video_file;
+      if (this.featuredMovie.is_processed) {
+        this.currentBackgroundVideo = this.movieService.reconstructVideoPath(this.featuredMovie);
+      } else {
+        this.currentBackgroundVideo = this.featuredMovie.video_file;
+      }
     }
   }
 
@@ -102,6 +106,14 @@ export class MovieDashboardComponent {
       this.movieService.setCurrentMovie(this.featuredMovie);
       this.router.navigate(['/videoplayer']);
     }
+  }
+
+  scrollToDatenschutz() {
+    setTimeout(() => this.viewportScroller.scrollToAnchor('datenschutz'), 1);
+  }
+
+  scrollToImpressum() {
+    setTimeout(() => this.viewportScroller.scrollToAnchor('impressum'), 1);
   }
 
 }

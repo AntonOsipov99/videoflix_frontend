@@ -43,8 +43,8 @@ vg-controls {
   font-size: 12px;
 }
 
-.quality-menu button:hover, 
-.quality-menu button.active {   
+.quality-menu button:hover,
+.quality-menu button.active {
   background: rgba(255, 255, 255, 0.2);
 }
 
@@ -88,5 +88,25 @@ vg-controls {
 
   &:hover {
     cursor: pointer;
+  }
+}
+
+@media (max-width: 550px) {
+  vg-scrub-bar {
+    margin: 0 2px;
+  }
+}
+
+@media (max-width: 450px) {
+  vg-scrub-bar {
+    margin: 0 2px;
+  }
+
+  vg-mute {
+    display: none;
+  }
+
+  vg-volume {
+    display: none;
   }
 }

@@ -72,3 +72,35 @@ input:focus {
     }
 }
 
+@media (max-width: 600px) {
+    h1 {
+        font-size: 40px;
+    }
+
+    .sign-up-container {
+        width: 80%;
+        height: 440px;
+    }
+
+    input {
+        width: 100%;
+    }
+
+    form {
+        width: 80%;
+    }
+}
+
+@media (max-width: 500px) {
+    input {
+        font-size: 16px;
+
+        &::placeholder {
+            font-size: 16px;
+        }
+    }
+
+    .sign-up-btn {
+        font-size: 16px;
+    }
+}

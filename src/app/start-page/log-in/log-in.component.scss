@@ -13,6 +13,12 @@ h1 {
     font-size: 48px;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 input {
     width: 370px;
     padding: 10px;
@@ -83,3 +89,35 @@ input:focus {
     }
 }
 
+@media (max-width: 600px) {
+    h1 {
+        font-size: 40px;
+    }
+
+    .log-in-container {
+        width: 80%;
+        height: 440px;
+    }
+
+    input {
+        width: 100%;
+    }
+
+    form {
+        width: 80%;
+    }
+}
+
+@media (max-width: 500px) {
+    input {
+        font-size: 16px;
+
+        &::placeholder {
+            font-size: 16px;
+        }
+    }
+
+    .log-in-btn {
+        font-size: 16px;
+    }
+}

@@ -70,15 +70,41 @@ export class MovieService {
     localStorage.setItem('movieSrc', value);
   }
 
-setCurrentMovie(movie: Movie) {
-  this.currentMovie = movie;
-  if (movie.is_processed && movie.hls_manifest) {
-    const baseUrl = 'https://backend.anton-videoflix-server.de/media/';
-    const hlsUrl = `${baseUrl}${movie.hls_manifest}`;
-    this.movieSrc = hlsUrl;
-  } else {
-    this.movieSrc = movie.video_file;
+  setCurrentMovie(movie: Movie) {
+    this.currentMovie = movie;
+    if (movie.is_processed && movie.hls_manifest) {
+      const baseUrl = 'https://backend.anton-videoflix-server.de/media/';
+      this.movieSrc = `${baseUrl}${movie.hls_manifest}`;
+    } else {
+      const videoPath = this.reconstructVideoPath(movie);
+      this.movieSrc = videoPath;
+    }
   }
-}
+  
+  reconstructVideoPath(movie: Movie): string {
+    const baseUrl = 'https://backend.anton-videoflix-server.de/media/videos/';
+    const movieId = movie.id;
+    if (!movie.video_file) {
+      console.log('Video file path is missing for movie:', movie.title);
+      return '';
+    }
+    const pathParts = movie.video_file.split('/');
+    const fileName = pathParts.pop() || '';
+    const baseName = fileName.replace(/\.[^/.]+$/, '');
+    const resolution = this.getBestResolution(movie);
+    return `${baseUrl}${movieId}/${baseName}_${resolution}.mp4`;
+  }
+    
+    getBestResolution(movie: Movie): string {
+      const preferredResolutions = ['1080p', '720p', '360p', '120p'];
+      if (movie.available_resolutions && Array.isArray(movie.available_resolutions)) {
+        for (const res of preferredResolutions) {
+          if (movie.available_resolutions.includes(res)) {
+            return res;
+          }
+        }
+      }
+      return '1080p';
+    }
   
 }

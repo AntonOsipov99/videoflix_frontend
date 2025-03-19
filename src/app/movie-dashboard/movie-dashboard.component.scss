@@ -1,6 +1,7 @@
 .content {
     padding: 0 5%;
     position: relative;
+    height: 100%;
     z-index: 1;
     background: linear-gradient(
         to bottom, 
@@ -96,6 +97,8 @@ header {
 .movie {
     height: 120px;
     width: 220px;
+    object-fit: cover;
+    border-radius: 3px;
     transition: transform 0.1s ease;
 
     &:hover {
@@ -135,4 +138,42 @@ app-impressum {
     position: absolute;
     top: 30%;
     left: 36%;
+}
+
+@media (max-width: 1000px) {
+    app-impressum {
+        left: 22%;
+    }
+}
+
+@media (max-width: 900px) {
+    .movie-description-box {
+        width: auto;
+    }
+
+    .movie-headline {
+        font-size: 62px;
+    }
+}
+
+@media (max-width: 700px) {
+    .movie-headline {
+        font-size: 50px;
+    }
+
+    app-impressum {
+        left: 11%;
+    }
+}
+
+@media (max-width: 600px) {
+    app-datenschutz {
+        left: 4%;
+    }
+}
+
+@media (max-width: 500px) {
+    app-datenschutz {
+        left: 2%;
+    }
 }

@@ -19,7 +19,6 @@ interface ActivationResponse {
   providedIn: 'root'
 })
 export class AuthService {
-
   private http = inject(HttpClient);
   private router = inject(Router);
   private toastr = inject(ToastrService);
@@ -124,7 +123,7 @@ export class AuthService {
     }
 
     return {
-      'non_field_errors': ['Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.']
+      'non_field_errors': ['An unexpected error occurred. Please try again.']
     };
   }
 

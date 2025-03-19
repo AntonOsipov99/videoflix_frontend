@@ -1,7 +1,6 @@
-<img class="background-image" [src]="this.authService.currentBackgroundImage">
 <div class="content-container">
     <header>
-        <img class="logo" src="assets/img/Logo.svg" alt="videoflix-logo" (click)="this.authService.toggleToStartPage()">
+        <div class="logo" (click)="this.authService.toggleToStartPage()"></div>
         <div class="log-in-btn" [ngClass]="{'hidden': this.authService.showLogin}"
             (click)="this.authService.toggleToLogIn()">Log in</div>
     </header>

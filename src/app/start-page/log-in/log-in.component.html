@@ -1,16 +1,16 @@
-<form (submit)="logIn()" ngNativeValidate>
-    <div class="log-in-container">
-        <h1>
-            Log in
-        </h1>
+<div class="log-in-container">
+    <h1>
+        Log in
+    </h1>
+    <form (submit)="logIn()" ngNativeValidate>
         <input required type="email" placeholder="Email Address" name="email" [(ngModel)]="email">
         <input required type="password" placeholder="Password" name="password" [(ngModel)]="password">
         <button type="submit" class="log-in-btn" [ngClass]="{'disabled-btn': !email || !password}"
             [disabled]="!email || !password">Log in</button>
-        <span class="color-purple" (click)="this.authService.toggleToForgotPassword()">Forgot password?</span>
-        <div class="bottom-box">
-            <span>New to Videoflix?</span>
-            <span (click)="this.authService.toggleToSignUp()" class="color-purple">Sign Up now</span>
-        </div>
+    </form>
+    <span class="color-purple" (click)="this.authService.toggleToForgotPassword()">Forgot password?</span>
+    <div class="bottom-box">
+        <span>New to Videoflix?</span>
+        <span (click)="this.authService.toggleToSignUp()" class="color-purple">Sign Up now</span>
     </div>
-</form>
+</div>
