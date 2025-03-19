@@ -4,14 +4,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
+import { ImpressumComponent } from "../../impressum/impressum.component";
+import { DatenschutzComponent } from "../../datenschutz/datenschutz.component";
 
 @Component({
   selector: 'app-reset-password',
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    CommonModule
-  ],
+    CommonModule,
+    ImpressumComponent,
+    DatenschutzComponent
+],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.scss'
 })
@@ -44,6 +48,7 @@ export class ResetPasswordComponent {
         this.router.navigate(['']);
       }
     });
+    this.authService.toggleToResetPassword();
   }
 
   passwordMatchValidator(form: FormGroup) {
