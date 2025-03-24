@@ -48,6 +48,7 @@ export class ResetPasswordComponent {
         this.router.navigate(['']);
       }
     });
+    this.authService.showCancelButton = true;
     this.authService.toggleToResetPassword();
   }
 
@@ -68,6 +69,16 @@ export class ResetPasswordComponent {
       this.router.navigate(['']); 
       this.authService.toggleToLogIn(); 
     }, 2000);
+  }
+
+  toggleToDatenschutz() {
+    this.authService.showDatenschutz = true;
+    this.authService.showResetPassword = false;
+  }
+  
+  toggleToImpressum() {
+    this.authService.showImpressum = true;
+    this.authService.showResetPassword = false;
   }
 
   onSubmit() {

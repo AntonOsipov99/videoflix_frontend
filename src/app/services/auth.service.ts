@@ -80,10 +80,12 @@ export class AuthService {
 
   closeDatenschutz() {
     this.showDatenschutz = false;
+    this.showResetPassword = true;
   }
 
   closeImpressum() {
     this.showImpressum = false;
+    this.showResetPassword = true;
   }
 
   async register(email: string, password: string, repeatedPassword: string) {
