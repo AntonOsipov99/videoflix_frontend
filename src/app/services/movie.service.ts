@@ -73,7 +73,7 @@ export class MovieService {
   setCurrentMovie(movie: Movie) {
     this.currentMovie = movie;
     if (movie.is_processed && movie.hls_manifest) {
-      const baseUrl = 'https://backend.anton-videoflix-server.de/media/';
+      const baseUrl = 'http://127.0.0.1:8000/media/';
       this.movieSrc = `${baseUrl}${movie.hls_manifest}`;
     } else {
       const videoPath = this.reconstructVideoPath(movie);
@@ -82,7 +82,7 @@ export class MovieService {
   }
   
   reconstructVideoPath(movie: Movie): string {
-    const baseUrl = 'https://backend.anton-videoflix-server.de/media/videos/';
+    const baseUrl = 'http://127.0.0.1:8000/media/videos/';
     const movieId = movie.id;
     if (!movie.video_file) {
       console.log('Video file path is missing for movie:', movie.title);
