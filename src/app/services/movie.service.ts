@@ -22,7 +22,7 @@ export interface Movie {
 })
 export class MovieService {
 
-  private apiUrl = 'https://backend.anton-videoflix-server.de/api/movies/';
+  private apiUrl = 'http://127.0.0.1:8000/api/movies/';
   private _movieSrc: string = '';
   currentMovie: Movie | null = null;
 

@@ -74,7 +74,7 @@ header {
 }
 
 ::-webkit-scrollbar-track {
-    background-color: transparent;
+    background-color: black;
   }
   
   ::-webkit-scrollbar-thumb {
@@ -89,7 +89,6 @@ header {
   
   ::-webkit-scrollbar {
     height: 6px;
-    display: none;
     width: 6px;
     background-color: #141D2F;
   }
@@ -98,6 +97,7 @@ header {
     height: 120px;
     width: 220px;
     object-fit: cover;
+    margin-bottom: 5px;
     border-radius: 3px;
     transition: transform 0.1s ease;
 

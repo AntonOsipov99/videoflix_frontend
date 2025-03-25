@@ -24,7 +24,7 @@ export class LogInComponent {
 
   async logIn() {
     try {
-      const response = await fetch('https://backend.anton-videoflix-server.de/api/auth/login/', {
+      const response = await fetch('http://127.0.0.1:8000/api/auth/login/', {
         method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: this.email, password: this.password })
       });
