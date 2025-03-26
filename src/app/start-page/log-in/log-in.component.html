@@ -5,8 +5,10 @@
     <form (submit)="logIn()" ngNativeValidate>
         <input required type="email" placeholder="Email Address" name="email" [(ngModel)]="email">
         <input required type="password" placeholder="Password" name="password" [(ngModel)]="password">
-        <button type="submit" class="log-in-btn" [ngClass]="{'disabled-btn': !email || !password}"
-            [disabled]="!email || !password">Log in</button>
+        <div class="buttons">
+            <button type="submit" class="log-in-btn" [ngClass]="{'disabled-btn': !email || !password}" [disabled]="!email || !password">Log in</button>
+            <div (click)="guestLogIn()" class="log-in-btn">Guest Log in</div>
+        </div>
     </form>
     <span class="color-purple" (click)="this.authService.toggleToForgotPassword()">Forgot password?</span>
     <div class="bottom-box">

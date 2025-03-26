@@ -7,7 +7,7 @@
         <div (click)="this.authService.logOut()" class="log-out-btn"><img src="assets/img/logout.svg" alt="Log-Out-Logo">Log Out</div>
     </header>
     <div class="movie-description-box">
-        <h1 class="movie-headline">
+        <h1 class="movie-featured-headline">
             {{ featuredMovieName }}
         </h1>
         <p class="movie-description">
@@ -15,36 +15,40 @@
         </p>
         <div class="log-out-btn width-btn" (click)="playFeaturedMovie()"><img src="assets/img/play_arrow.svg" alt="arrow-image">Play</div>
     </div>
+    <p class="headline">
+        New on Videoflix
+    </p>
     <div class="movie-list">
-        <p class="headline">
-            New on Videoflix
-        </p>
-        <div class="movies-container">
-            <img *ngFor="let movie of newMovies" [src]="movie.image" alt="movie-image" class="movie" (click)="playMovie(movie)">
+        <div *ngFor="let movie of newMovies" class="movies-container">
+            <span class="movie-headline">{{  movie.title  }}</span>
+            <img [src]="movie.image" alt="movie-image" class="movie" (click)="playMovie(movie)">
         </div>
     </div>
+    <p class="headline">
+        Documentary
+    </p>
     <div class="movie-list">
-        <p class="headline">
-            Documentary
-        </p>
-        <div class="movies-container">
-            <img *ngFor="let movie of documentaryMovies" [src]="movie.image" alt="movie-image" class="movie" (click)="playMovie(movie)">
+        <div *ngFor="let movie of documentaryMovies" class="movies-container">
+            <span class="movie-headline">{{  movie.title  }}</span>
+            <img [src]="movie.image" alt="movie-image" class="movie" (click)="playMovie(movie)">
         </div>
     </div>
+    <p class="headline">
+        Drama
+    </p>
     <div class="movie-list">
-        <p class="headline">
-            Drama
-        </p>
-        <div class="movies-container">
-            <img *ngFor="let movie of dramaMovies" [src]="movie.image" alt="movie-image" class="movie" (click)="playMovie(movie)">
+        <div *ngFor="let movie of dramaMovies" class="movies-container">
+            <span class="movie-headline">{{  movie.title  }}</span>
+            <img [src]="movie.image" alt="movie-image" class="movie" (click)="playMovie(movie)">
         </div>
     </div>
+    <p class="headline">
+        Romance
+    </p>
     <div class="movie-list">
-        <p class="headline">
-            Romance
-        </p>
-        <div class="movies-container">
-            <img *ngFor="let movie of romanceMovies" [src]="movie.image" alt="movie-image" class="movie" (click)="playMovie(movie)">
+        <div *ngFor="let movie of romanceMovies" class="movies-container">
+            <span class="movie-headline">{{  movie.title  }}</span>
+            <img [src]="movie.image" alt="movie-image" class="movie" (click)="playMovie(movie)">
         </div>
     </div>
     <app-impressum *ngIf="this.authService.showImpressum" id="impressum"></app-impressum>

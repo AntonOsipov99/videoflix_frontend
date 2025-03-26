@@ -89,6 +89,11 @@ input:focus {
     }
 }
 
+.buttons {
+    display: flex;
+    flex-direction: column;
+}
+
 @media (max-width: 600px) {
     h1 {
         font-size: 40px;
@@ -96,7 +101,7 @@ input:focus {
 
     .log-in-container {
         width: 80%;
-        height: 440px;
+        height: 460px;
     }
 
     input {
